@@ -1,6 +1,12 @@
-import Navbar from "@/components/Navbar";
+"use client";
+
 import "./globals.css";
-import Footer from "@/components/Footer";
+
+// context
+import { ApplyProvider } from "@/context/ApplyContext";
+
+// components
+import { Footer, Navbar, Provider } from "@/components";
 
 export const metadata = {
   title: "ThinkWht",
@@ -26,9 +32,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <Navbar />
-        {children}
-        <Footer />
+        <ApplyProvider>
+          <Provider>
+            <Navbar />
+            {children}
+            <Footer />
+          </Provider>
+        </ApplyProvider>
       </body>
     </html>
   );

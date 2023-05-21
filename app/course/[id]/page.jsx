@@ -1,9 +1,15 @@
-import About from "@/components/Courses/About";
-import Apply from "@/components/Courses/Apply";
-import ApplyPopup from "@/components/Courses/ApplyPopup";
-import Hero from "@/components/Courses/Hero";
-import Highlights from "@/components/Courses/Highlights";
-import LearningPath from "@/components/Courses/LearningPath";
+"use client";
+
+import {
+  About,
+  Apply,
+  ApplyPopup,
+  Hero,
+  Highlights,
+  LearningPath,
+} from "@/components/Courses";
+import { ApplyContext } from "@/context/ApplyContext";
+import { useContext } from "react";
 
 const page = ({ params }) => {
   const pageParams = {
@@ -104,11 +110,13 @@ const page = ({ params }) => {
       break;
   }
 
+  const { popup } = useContext(ApplyContext);
+
   return (
     <div>
       <Hero title={pageParams.title} imgURL={pageParams.img} />
       <Apply duration={pageParams.courseDuration} fee={pageParams.programFee} />
-      <ApplyPopup />
+      {popup && <ApplyPopup />}
       <About />
       <Highlights />
       <LearningPath />

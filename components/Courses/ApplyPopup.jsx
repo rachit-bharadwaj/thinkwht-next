@@ -1,4 +1,10 @@
+"use client";
+
+import { ApplyContext } from "@/context/ApplyContext";
+import { useContext } from "react";
+
 const ApplyPopup = () => {
+  const { closePopup } = useContext(ApplyContext);
   return (
     <form method="post">
       <div class=" absolute  w-full lg:w-full top-40 " id="applyMenu">
@@ -6,6 +12,7 @@ const ApplyPopup = () => {
           <p
             class="text-right mx-5 text-3xl cursor-pointer"
             id="closeApplyMenu"
+            onClick={closePopup}
           >
             X
           </p>

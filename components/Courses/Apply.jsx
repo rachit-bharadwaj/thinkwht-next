@@ -1,8 +1,14 @@
+"use client";
+
+import { ApplyContext } from "@/context/ApplyContext";
+import { useContext } from "react";
+
 // import icons
 import { HiOutlineClock } from "react-icons/hi";
 import { BiRupee } from "react-icons/bi";
 
 const Apply = (props) => {
+  const { popup, openPopup } = useContext(ApplyContext);
   return (
     <div
       className="bg-white  shadow-xl w-[92%] flex flex-col sm:w-[840px] sm:flex sm:flex-row justify-center items-center space-y-2 sm:space-x-10 sm:space-y-0 mx-auto p-5
@@ -24,7 +30,10 @@ const Apply = (props) => {
         <div></div>
       </div>
       <div>
-        <button className="font-bold rounded-full bg-secondary px-5 text-white py-2 text-lg mt-5 lg:m-0">
+        <button
+          onClick={openPopup}
+          className="font-bold rounded-full bg-secondary px-5 text-white py-2 text-lg mt-5 lg:m-0"
+        >
           Apply Now
         </button>
       </div>

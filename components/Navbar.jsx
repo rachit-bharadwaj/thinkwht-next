@@ -4,12 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 // import react modules
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // import icons
 import { BsSearch } from "react-icons/bs";
 import { HiMenu } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
+
+// import next-auth
+import { getProviders, signIn, useSession } from "next-auth/react";
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
@@ -19,6 +22,18 @@ const Navbar = () => {
   const closeMenu = () => {
     setMenu(false);
   };
+
+  // session management
+  const { data: session } = useSession();
+  const [providers, setProviders] = useState(null);
+
+  useEffect(() => {
+    const setupProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+    setupProviders();
+  }, []);
 
   return (
     <nav className="bg-primary sticky top-0 z-50">
@@ -46,15 +61,15 @@ const Navbar = () => {
           <div className="hidden lg:flex">
             <ul className="flex gap-10 text-xl">
               <li className="text-center group">
-                <Link href="/"> Home </Link>
+                <Link href="/">Home</Link>
                 <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
               </li>
               <li className="text-center group">
-                <Link href="/about"> About </Link>
+                <Link href="/about">About</Link>
                 <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
               </li>
               <li className="text-center group">
-                <Link href="/contact"> Contact </Link>
+                <Link href="/contact">Contact</Link>
                 <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
               </li>
             </ul>
@@ -95,25 +110,62 @@ const Navbar = () => {
         >
           <ul className={menu ? `flex flex-col gap-3` : `hidden`}>
             <li className="text-center group">
-              <Link href="/"> Home </Link>
+              <Link href="/" onClick={closeMenu}>
+                Home
+              </Link>
               <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
             </li>
             <li className="text-center group">
-              <Link href="/about"> About </Link>
+              <Link href="/about" onClick={closeMenu}>
+                About
+              </Link>
               <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
             </li>
             <li className="text-center group">
-              <Link href="/contact"> Contact </Link>
+              <Link href="/contact" onClick={closeMenu}>
+                Contact
+              </Link>
               <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
             </li>
-            <li className="text-center group">
-              <Link href="/login"> Login </Link>
-              <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
-            </li>
-            <li className="text-center group">
-              <Link href="/signup"> Signup </Link>
-              <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
-            </li>
+
+            {session?.user ? (
+              <li className="text-center group">
+                <Link href="/dashboard" onClick={closeMenu}>
+                  Logout
+                </Link>
+                <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
+              </li>
+            ) : (
+              <>
+                {providers &&
+                  Object.values(providers).map((provider) => (
+                    <>
+                      <li className="text-center group">
+                        <Link href="/login" onClick={closeMenu}>
+                          <button
+                            key={provider.name}
+                            onClick={() => signIn(provider.id)}
+                          >
+                            Login
+                          </button>
+                        </Link>
+                        <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
+                      </li>
+                      <li className="text-center group">
+                        <Link href="/signup" onClick={closeMenu}>
+                          <button
+                            key={provider.name}
+                            onClick={() => signIn(provider.id)}
+                          >
+                            Signup
+                          </button>
+                        </Link>
+                        <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
+                      </li>
+                    </>
+                  ))}
+              </>
+            )}
           </ul>
         </div>
       </div>
