@@ -1,6 +1,5 @@
 "use client";
 
-import { ApplyContext } from "@/context/ApplyContext";
 import { useContext, useEffect, useState } from "react";
 
 // import icons
@@ -41,7 +40,7 @@ const Apply = (props) => {
     e.preventDefault();
     const data = { name, mobile, email, course, courseID, college };
     console.log(data);
-    const result = await fetch("/api/addStudent", {
+    const result = await fetch("/api/addintern", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -49,7 +48,7 @@ const Apply = (props) => {
 
     const res = await result.json();
 
-    console.log(res);
+    console.log(res.message);
   };
 
   // const { popup, openPopup } = useContext(ApplyContext);
@@ -65,22 +64,15 @@ const Apply = (props) => {
   return (
     <div
       className="bg-white  shadow-xl w-[92%] flex flex-col sm:w-[840px] sm:flex sm:flex-row justify-center items-center space-y-2 sm:space-x-10 sm:space-y-0 mx-auto p-5
-       rounded-xl  -mt-10 lg:py-7"
+       rounded-xl lg:py-7 md:justify-evenly my-16"
     >
       <div className="flex gap-5">
         <div className="flex items-center space-x-2 font-bold">
           <HiOutlineClock className="bg-primary p-1 rounded text-5xl" />
           <p>
-            Course Duration <br /> {props.duration}
+            Duration <br /> {props.duration}
           </p>
         </div>
-        <div className="flex items-center space-x-2 font-bold">
-          <BiRupee className="bg-primary p-1 rounded text-5xl" />
-          <p>
-            Program Fee <br /> &#8377;{props.fee}/month
-          </p>
-        </div>
-        <div></div>
       </div>
       <div>
         <button

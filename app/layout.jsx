@@ -43,3 +43,13 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
