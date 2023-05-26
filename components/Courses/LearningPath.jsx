@@ -1,6 +1,6 @@
 const LearningPath = () => {
   return (
-    <div className="my-20 space-y-14">
+    <div id="learnPath" className="my-20 space-y-14">
       <p className="color-primary text-4xl font-extrabold text-center mb-10">
         Learning Path
       </p>

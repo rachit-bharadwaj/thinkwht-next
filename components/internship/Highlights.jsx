@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Highlights = () => {
   return (
-    <div className="mx-auto py-10 w-full flex flex-col items-center">
+    <div id="highlightsIntern" className="mx-auto py-10 w-full flex flex-col items-center">
       <p className="text-secondary text-4xl font-extrabold text-center mb-10 ">
         What will you get ?
       </p>

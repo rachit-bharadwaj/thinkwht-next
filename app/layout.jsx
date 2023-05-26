@@ -4,6 +4,10 @@ import "./globals.css";
 
 // context
 import { ApplyProvider } from "@/context/ApplyContext";
+import { useState } from "react";
+import Loadingexternal from "@/components/Loadingexternal";
+import { useEffect } from "react";
+import axios from "axios";
 
 // components
 import { Footer, Navbar, Provider } from "@/components";
@@ -14,6 +18,30 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    axios.interceptors.request.use(
+      (config) => {
+        setLoading(true);
+        document.getElementById("home").style.opacity = "0.5"
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+    axios.interceptors.response.use(
+      (config) => {
+        setLoading(false);
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+  }, []);
+
   return (
     <html lang="en">
       <head>
@@ -31,25 +59,20 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>
-        <ApplyProvider>
-          <Provider>
-            <Navbar />
-            {children}
-            <Footer />
-          </Provider>
-        </ApplyProvider>
+      <body className="overflow-x-hidden">
+        <Loadingexternal show={loading} />
+        <div id="home">
+          <ApplyProvider>
+            <Provider>
+              <Navbar />
+              <div id="exceptNav">
+                {children}
+                <Footer />
+              </div>
+            </Provider>
+          </ApplyProvider>
+        </div>
       </body>
     </html>
   );
-}
-
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
-
-  return {
-    props: {
-      session,
-    },
-  };
 }

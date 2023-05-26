@@ -1,8 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import TNC from "./TNC";
+import { useState } from "react";
+import Privacy from "./Privacy";
+import Help from "./Help";
 
 const Footer = () => {
+  const [tnc, setTnc] = useState(false);
+  const [privacy, setPrivacy] = useState(false);
+  const [help, setHelp] = useState(false);
+
   return (
-    <div className=" bg-footer text-white items-center p-14 space-y-5 md:space-y-8">
+    <footer id="footer" className=" bg-footer text-white items-center p-14 space-y-5 md:space-y-8">
       <Link href="/">
         <div className="flex justify-center items-center lg:mr-[65px] mr-[20px]">
           <img
@@ -21,17 +31,44 @@ const Footer = () => {
         <li>
           <Link href="/about">About</Link>
         </li>
-        <li className="hidden sm:flex cursor-pointer" id="opentermspopup">
-          <Link href="#">Terms & Conditions</Link>
+        <li
+          onClick={() => {
+            setTnc(true);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="hidden sm:flex cursor-pointer"
+          id="opentermspopup"
+        >
+          Terms & Conditions
         </li>
-        <li className="sm:hidden cursor-pointer" id="openmobtermspopup">
-          <Link href="#">T&C</Link>
+        <li
+          onClick={() => {
+            setTnc(true);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="sm:hidden cursor-pointer"
+        >
+          T&C
         </li>
-        <li id="openprivacypopup" className="cursor-pointer">
-          <Link href="#">Privacy</Link>
+        <li
+          onClick={() => {
+            setPrivacy(true);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          id="openprivacypopup"
+          className="cursor-pointer"
+        >
+          Privacy
         </li>
-        <li id="openhelppopup" className="cursor-pointer">
-          <Link href="#">Help</Link>
+        <li
+          onClick={() => {
+            setHelp(true);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          id="openhelppopup"
+          className="cursor-pointer"
+        >
+          Help
         </li>
       </ul>
 
@@ -53,7 +90,16 @@ const Footer = () => {
           </Link>
         </li>
       </ul>
-    </div>
+
+      {/* TNC */}
+      {tnc && <TNC />}
+
+      {/* Privacy */}
+      {privacy && <Privacy />}
+
+      {/* Help */}
+      {help && <Help />}
+    </footer>
   );
 };
 

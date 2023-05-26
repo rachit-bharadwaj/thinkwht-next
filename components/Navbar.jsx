@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 // import react modules
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 // import icons
 import { BsSearch } from "react-icons/bs";
@@ -15,6 +15,12 @@ import {
   RiArrowDropUpLine,
   RiCloseLine,
 } from "react-icons/ri";
+import { TiTick } from "react-icons/ti";
+
+// import components
+import Loader from "./Loader";
+import axios from "axios";
+import swal from "sweetalert";
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
@@ -48,11 +54,7 @@ const Navbar = () => {
   };
 
   // for campus ambassador
-  const [campusAmbassador, setCampusAmbassador] = useState(false);
-  const openCampusAmbassador = () => {
-    setCampusAmbassador(true);
-    setMenu(false);
-  };
+  const [campusAmbassador, setCampusAmbassador] = useState(true);
   const closeCampusAmbassador = () => {
     setCampusAmbassador(false);
     setMenu(false);
@@ -62,10 +64,22 @@ const Navbar = () => {
   const [campusAmbassadorForm, setCampusAmbassadorForm] = useState(false);
   const openCampusAmbassadorForm = () => {
     setCampusAmbassadorForm(true);
+    document.getElementById("exceptNav").style.opacity = "0.5";
+    document.getElementById("nav-div").style.opacity = "0.5";
     closeCampusAmbassador();
   };
   const closeCampusAmbassadorForm = () => {
     setCampusAmbassadorForm(false);
+    document.getElementById("exceptNav").style.opacity = "1";
+    document.getElementById("nav-div").style.opacity = "1";
+  };
+  // successMessage
+  const [successMessage, setSuccessMessage] = useState(false);
+  const openSuccessMessage = () => {
+    setSuccessMessage(true);
+  };
+  const closeSuccessMessage = () => {
+    setSuccessMessage(false);
   };
 
   // sending campus ambassador form data to backend
@@ -97,8 +111,20 @@ const Navbar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/addcampusAmbassador", {
-      method: "POST",
+    if (
+      name === "" ||
+      mobile === "" ||
+      email === "" ||
+      collegeName === "" ||
+      year === "" ||
+      location === "" ||
+      branch === ""
+    ) {
+      swal("Please fill all the fields");
+      return;
+    }
+    closeCampusAmbassadorForm();
+    const res = await axios.post("/api/addcampusAmbassador", {
       headers: {
         "Content-Type": "application/json",
       },
@@ -112,15 +138,15 @@ const Navbar = () => {
         branch,
       }),
     });
-
-    const result = await res.json();
+    const result = await res.data;
+    if (result.message === "campus ambassador added") openSuccessMessage();
     console.log(result.message);
   };
 
   return (
-    <nav className="bg-primary sticky top-0 z-50">
-      <div className="bg-primary">
-        <div className="flex items-center justify-evenly sm:justify-between sm:px-3 lg:px-24 lg:py-2">
+    <nav id="nav" className="bg-primary sticky top-0 z-50">
+      <div id="nav-div" className="bg-primary">
+        <div className="flex items-center justify-evenly sm:justify-between sm:px-3 lg:px-16 lg:py-2">
           <Link href="/">
             <Image
               src="/images/twnewlogo2.png"
@@ -136,7 +162,7 @@ const Navbar = () => {
             <input
               type="text"
               placeholder="Search"
-              className="focus:outline-none text-lg w-[8rem] lg:w-64"
+              className="focus:outline-none text-lg w-[8rem] lg:w-40"
             />
           </div>
 
@@ -156,7 +182,7 @@ const Navbar = () => {
               </li>
               <li
                 className="text-center group cursor-pointer"
-                onClick={openCampusAmbassador}
+                onClick={openCampusAmbassadorForm}
               >
                 Campus Ambassador
                 <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
@@ -198,12 +224,16 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="hidden lg:flex gap-10">
-              <button className="px-10 py-3 rounded-full bg-secondary text-white font-bold text-xl">
-                <Link href="/login"> Login </Link>
-              </button>
-              <button className="px-10 py-3 rounded-full bg-white text-secondary font-bold text-xl">
-                <Link href="/signup"> Signup </Link>
-              </button>
+              <Link href="/login">
+                <button className="px-10 py-3 rounded-full bg-secondary text-white font-bold text-xl">
+                  Login
+                </button>
+              </Link>
+              <Link href="/signup">
+                <button className="px-10 py-3 rounded-full bg-white text-secondary font-bold text-xl">
+                  Signup
+                </button>
+              </Link>
             </div>
           )}
 
@@ -255,7 +285,7 @@ const Navbar = () => {
 
             <li
               className="text-center group cursor-pointer"
-              onClick={openCampusAmbassador}
+              onClick={openCampusAmbassadorForm}
             >
               Campus Ambassador
               <div className="h-1 w-1 bg-secondary mx-auto rounded-full hidden animate-bounce group-hover:block" />
@@ -315,20 +345,25 @@ const Navbar = () => {
 
       {/* campus ambassador form */}
       {campusAmbassadorForm && (
-        <div className="w-full flex justify-center">
+        <div
+          id="capopup"
+          className="absolute w-full justify-center flex top-16 z-50 max-h-screen overflow-y-scroll p-5 scrollbar scrollbar-none"
+        >
           <form
             method="POST"
-            className="flex flex-col absolute p-5 rounded-lg bg-white my-5 top-0"
+            className="flex flex-col  p-5 rounded-lg bg-white border text-black"
           >
-            <RiCloseLine
-              onClick={closeCampusAmbassadorForm}
-              className="absolute right-3 top-3 text-4xl cursor-pointer"
-            />
-            <p className="font-bold mt-14">
+            <div className="w-full flex justify-end">
+              <RiCloseLine
+                onClick={closeCampusAmbassadorForm}
+                className="text-4xl cursor-pointer"
+              />
+            </div>
+            <p className="font-bold mt-7">
               Please fill in below form fields and send us your Enquiry
             </p>
 
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-3">
               <div className="flex flex-col">
                 <label htmlFor="name">Name*</label>
                 <input
@@ -354,7 +389,7 @@ const Navbar = () => {
               </div>
 
               <div className="flex flex-col">
-                <label htmlFor="phone">Phone</label>
+                <label htmlFor="phone">Phone*</label>
                 <div className="w-full flex gap-3">
                   <input
                     type="number"
@@ -432,6 +467,32 @@ const Navbar = () => {
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {successMessage && (
+        <div className="w-full flex justify-center absolute top-24">
+          <div className="bg-white bg-opacity-95 absolute p-10 rounded-lg w-fit mx-10 md:mx-auto">
+            <div className="space-y-5 text-center">
+              <p className="text-lg font-bold">
+                Your Enquiry has been sent Successfully!
+              </p>
+              <TiTick className="text-5xl mx-auto bg-green-500 text-white rounded-full p-1" />
+
+              <p className="my-5">
+                Thank you for contacting ThinkWht! We will get back to you
+                within 48 hours!
+              </p>
+              <Link href="/">
+                <button
+                  onClick={closeSuccessMessage}
+                  className="bg-secondary py-2 px-5 text-white rounded-lg font-bold"
+                >
+                  Continue
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
       )}
     </nav>

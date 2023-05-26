@@ -1,7 +1,7 @@
 import Image from "next/image";
 const Hero = (props) => {
   return (
-    <div className="bg-primary flex flex-col-reverse items-center px-5 w-full md:px-16 py-14 sm:flex-row">
+    <div id="heroIntern" className="bg-primary flex flex-col-reverse items-center px-5 w-full md:px-16 py-14 sm:flex-row">
       <div className="w-full  sm:space-y-3">
         <p className="text-secondary text-2xl md:text-5xl font-extrabold">
           Start Your Learning as

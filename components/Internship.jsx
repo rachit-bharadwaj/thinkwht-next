@@ -2,7 +2,7 @@ import Card from "@/props/Card";
 
 const Internship = () => {
   return (
-    <div className="my-14 lg:mx-10">
+    <div id="internship" className="py-14 lg:mx-10">
       <p className="text-center font-bold text-secondary text-4xl my-10 lg:text-5xl lg:my-16">
         Internship
       </p>

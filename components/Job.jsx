@@ -1,5 +1,3 @@
-
-
 const Job = () => {
   return (
     <div className="my-14 lg:mx-10" id="jobs">

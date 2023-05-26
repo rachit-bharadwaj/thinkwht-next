@@ -36,6 +36,10 @@ const page = () => {
 
   const signupSubmit = async (e) => {
     e.preventDefault();
+    if (name == "" || email == "" || password == "") {
+      swal("Please fill all the fields");
+      return;
+    }
 
     const data = {
       name,
@@ -58,15 +62,19 @@ const page = () => {
     }
     console.log(result);
 
-    if (result.message == "User Added Successfully")
-      swal("A Verification Mail Has been sent to Your Mail ID");
+    if (result.message == "User Added Successfully") {
+      swal("A Verification Mail Has been sent to Your Mail ID. You can login now");
+      window.location.reload();
+      // redirect to login page
+      
+    }
   };
   return (
     <div>
       <form method="POST">
         <div className="rounded-lg border-2 p-5 w-[80vw] mt-5 md:mt-10 md:w-fit h-fit my-20 mx-auto space-y-5 shadow-lg hover:shadow-2xl">
           <p className="text-2xl">Create new account</p>
-          <Link href="/auth/google">
+          {/* <Link href="/auth/google">
             <div className="rounded border-2 flex items-center justify-center md:px-28 py-3 space-x-3 cursor-pointer">
               <Image
                 width={500}
@@ -77,10 +85,10 @@ const page = () => {
               />
               <p>Login with Google</p>
             </div>
-          </Link>
+          </Link> */}
           <div className="flex items-center space-x-3">
             <div className="h-[1px] w-full bg-gray-300"></div>
-            <p className="text-gray-500">OR</p>
+            {/* <p className="text-gray-500">OR</p> */}
             <div className="h-[1px] w-full bg-gray-300"></div>
           </div>
           <div>

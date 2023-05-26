@@ -1,11 +1,12 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 // import icons
 import { HiOutlineClock } from "react-icons/hi";
-import { BiRupee } from "react-icons/bi";
-// import { ApplyPopup } from ".";
+
+import axios from "axios";
+import swal from "sweetalert";
 
 const Apply = (props) => {
   // sending form data to backend
@@ -38,27 +39,47 @@ const Apply = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (name == "" || mobile == "" || college == "") {
+      swal("Please fill all the fields");
+      return;
+    }
     const data = { name, mobile, email, course, courseID, college };
-    console.log(data);
-    const result = await fetch("/api/addintern", {
-      method: "POST",
+    const result = await axios.post("/api/addintern", {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
 
-    const res = await result.json();
-
-    console.log(res.message);
+    const res = result.data;
+    if (res.message) {
+      setApplyPopup(false);
+      swal("Your Form is submitted");
+    }
   };
-
-  // const { popup, openPopup } = useContext(ApplyContext);
 
   const [applyPopup, setApplyPopup] = useState(false);
   const openApplyForm = () => {
+    if (!sessionStorage.getItem("token")) {
+      swal("Please Login to Apply");
+      return;
+    }
     setApplyPopup(true);
+    document.getElementById("heroIntern").style.opacity = "0.5";
+    document.getElementById("aboutIntern").style.opacity = "0.5";
+    document.getElementById("highlightsIntern").style.opacity = "0.5";
+    document.getElementById("footer").style.opacity = "0.5";
+    document.getElementById("nav").style.opacity = "0.5";
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
   const closeApplyForm = () => {
     setApplyPopup(false);
+    document.getElementById("heroIntern").style.opacity = "1";
+    document.getElementById("aboutIntern").style.opacity = "1";
+    document.getElementById("highlightsIntern").style.opacity = "1";
+    document.getElementById("footer").style.opacity = "1";
+    document.getElementById("nav").style.opacity = "1";
   };
 
   return (
@@ -84,8 +105,8 @@ const Apply = (props) => {
       </div>
 
       {applyPopup && (
-        <div className="flex mx-auto">
-          <form method="post" className="absolute top-0 left-14">
+        <div className="w-full overflow-hidden h-screen absolute top-0 flex mx-auto z-50">
+          <form method="post">
             <div className=" absolute  w-full lg:w-full top-40 " id="applyMenu">
               <div className="bg-white  py-5  lg:px-12 rounded-lg mx-auto w-[360px] lg:w-fit shadow-lg hover:shadow-2xl space-y-8">
                 <p

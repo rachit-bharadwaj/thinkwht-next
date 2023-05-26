@@ -1,6 +1,6 @@
 const About = () => {
   return (
-    <div className="text-center px-7 md:px-28 my-[160px] space-y-7">
+    <div id="aboutCourse" className="text-center px-7 md:px-28 my-[160px] space-y-7">
       <p className="color-primary text-4xl font-extrabold">About</p>
       <p>
         This course will discuss AngularJs, a javascript framework that was

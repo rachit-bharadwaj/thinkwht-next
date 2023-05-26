@@ -33,6 +33,10 @@ const page = () => {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
+    if (email == "" || password == "") {
+      swal("Please fill all the fields");
+      return;
+    }
 
     const data = {
       email,
@@ -82,7 +86,7 @@ const page = () => {
       <form method="POST">
         <div className="rounded-lg border-2 p-5 w-[80vw] mt-5 md:mt-10 md:w-fit h-fit my-20 mx-auto space-y-7 shadow-lg hover:shadow-2xl">
           <p className="text-2xl">Login to your account</p>
-          <a href="/auth/google">
+          {/* <a href="/auth/google">
             <div className="rounded border-2 flex items-center justify-center md:px-28 py-3 space-x-3 cursor-pointer">
               <Image
                 width={500}
@@ -93,13 +97,13 @@ const page = () => {
               />
               <p onClick={signIn}>Login with Google</p>
             </div>
-          </a>
+          </a> */}
           <div>
             <ToastContainer />
           </div>
           <div className="flex items-center space-x-3">
             <div className="h-[1px] w-full bg-gray-300"></div>
-            <p className="text-gray-500">OR</p>
+            {/* <p className="text-gray-500">OR</p> */}
             <div className="h-[1px] w-full bg-gray-300"></div>
           </div>
 
