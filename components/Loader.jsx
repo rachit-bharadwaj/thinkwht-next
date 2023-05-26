@@ -1,20 +1,33 @@
 "use client";
 
-import { Circles } from "react-loader-spinner";
+import { useEffect, useState } from "react";
+import Loadingexternal from "@/components/Loadingexternal";
+import axios from "axios";
 
-const loading = (props) => {
-  return (
-    <div className="h-[50vh] text-5xl flex items-center justify-center">
-      <Circles
-        height="100"
-        width="100"
-        color="#275473"
-        ariaLabel="circles-loading"
-        visible={true}
-        show={props.show}
-      />
-    </div>
-  );
-};
+export default function Loader() {
+  const [loading, setLoading] = useState(false);
 
-export default loading;
+  useEffect(() => {
+    axios.interceptors.request.use(
+      (config) => {
+        setLoading(true);
+        document.getElementById("home").style.opacity = "0.5";
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+    axios.interceptors.response.use(
+      (config) => {
+        setLoading(false);
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+  }, []);
+
+  return <Loadingexternal show={loading} />;
+}

@@ -49,7 +49,6 @@ const Apply = (props) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-
     const res = result.data;
     if (res.message) {
       setApplyPopup(false);
