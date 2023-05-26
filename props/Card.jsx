@@ -4,7 +4,7 @@ import Link from "next/link";
 const Card = (props) => {
   return (
     <Link href={props.pageURL}>
-      <div className="shadow-md rounded-lg w-[60vw] hover:shadow-2xl mx-auto cursor-pointer px-5 py-14 flex flex-col gap-3 md:w-[40vw] lg:w-[20vw] lg:gap-7">
+      <div className="shadow-md rounded-lg w-[60vw] h-96 hover:shadow-2xl mx-auto cursor-pointer px-5 py-14 flex flex-col gap-3 md:w-[40vw] lg:w-[20vw] lg:gap-7">
         <Image
           src={props.imgSrc}
           alt={props.altText}

@@ -2,7 +2,7 @@ import Card from "@/props/Card";
 
 const Internship = () => {
   return (
-    <div className="my-14 lg:mx-10">
+    <div id="internship" className="py-14 lg:mx-10">
       <p className="text-center font-bold text-secondary text-4xl my-10 lg:text-5xl lg:my-16">
         Internship
       </p>
@@ -11,49 +11,49 @@ const Internship = () => {
           imgSrc="/images/ui-ux.png"
           altText="ui image"
           text="UI/UX"
-          pageURL="/course/uiux"
+          pageURL="/internship/uiux"
         />
         <Card
           imgSrc="/images/frontendDev.png"
           altText="frontend image"
           text="Frontend Development"
-          pageURL="/course/frontend"
+          pageURL="/internship/frontend"
         />
         <Card
           imgSrc="/images/backendDev.png"
           altText="backend image"
           text="Backend Development"
-          pageURL="/course/backend"
+          pageURL="/internship/backend"
         />
         <Card
           imgSrc="/images/flutterDev.png"
           altText="flutter image"
           text="Flutter Development"
-          pageURL="/course/flutter"
+          pageURL="/internship/flutter"
         />
         <Card
           imgSrc="/images/angularJS.png"
           altText="Angular image"
           text="Angular JS"
-          pageURL="/course/angular"
+          pageURL="/internship/angular"
         />
         <Card
           imgSrc="/images/reactJS.png"
           altText="flutter image"
           text="React JS"
-          pageURL="/course/react"
+          pageURL="/internship/react"
         />
         <Card
           imgSrc="/images/googleCloud.png"
           altText="google cloud image"
           text="Google Cloud"
-          pageURL="/course/googlecloud"
+          pageURL="/internship/googlecloud"
         />
         <Card
           imgSrc="/images/dsa.png"
           altText="Data Structures & Algorithms image"
           text="Data Structures & Algorithms"
-          pageURL="/course/dsa"
+          pageURL="/internship/dsa"
         />
       </div>
     </div>

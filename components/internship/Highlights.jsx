@@ -2,9 +2,9 @@ import Image from "next/image";
 
 const Highlights = () => {
   return (
-    <div id="highlightsCourse" className="mx-auto py-10 w-full flex flex-col items-center">
-      <p className="color-primary text-4xl font-extrabold text-center mb-10 ">
-        Courses Highlights
+    <div id="highlightsIntern" className="mx-auto py-10 w-full flex flex-col items-center">
+      <p className="text-secondary text-4xl font-extrabold text-center mb-10 ">
+        What will you get ?
       </p>
       <div className="grid grid-cols-3 grid-rows-3 gap-[15px] sm:gap-12  sm:pl-[95px]  ">
         <div className="flex items-center sm:flex-row flex-col text-center sm:space-x-7 ">

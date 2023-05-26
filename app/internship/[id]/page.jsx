@@ -1,14 +1,9 @@
 "use client";
 
-import {
-  About,
-  Apply,
-  Hero,
-  Highlights,
-  LearningPath,
-} from "@/components/courses";
-// import { ApplyContext } from "@/context/ApplyContext";
-// import { useContext } from "react";
+import About from "@/components/internship/About";
+import Apply from "@/components/internship/Apply";
+import Hero from "@/components/internship/Hero";
+import Highlights from "@/components/internship/Highlights";
 
 const page = ({ params }) => {
   const pageParams = {
@@ -116,25 +111,12 @@ const page = ({ params }) => {
       pageParams.courseID = pageParams.courseID[7];
       break;
   }
-
-  // const { popup } = useContext(ApplyContext);
-
   return (
     <div>
       <Hero title={pageParams.title} imgURL={pageParams.img} />
-
-      <Apply
-        duration={pageParams.courseDuration}
-        fee={pageParams.programFee}
-        courseId={pageParams.courseID}
-        courseName={pageParams.title}
-      />
-
       <About />
-
       <Highlights />
-
-      <LearningPath />
+      <Apply />
     </div>
   );
 };

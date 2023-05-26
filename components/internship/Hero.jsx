@@ -1,13 +1,13 @@
 import Image from "next/image";
 const Hero = (props) => {
   return (
-    <div id="heroCourse" className="bg-primary flex flex-col-reverse items-center px-5 w-full md:px-16 py-14 sm:flex-row">
+    <div id="heroIntern" className="bg-primary flex flex-col-reverse items-center px-5 w-full md:px-16 py-14 sm:flex-row">
       <div className="w-full  sm:space-y-3">
         <p className="text-secondary text-2xl md:text-5xl font-extrabold">
           Start Your Learning as
         </p>
         <p className="text-yellow -mt-1 text-2xl md:text-5xl font-extrabold">
-          {props.title}
+          {props.title}&nbsp;Intern
         </p>
         <p className="color-primary mt-2 md:text-lg text-sm"></p>
       </div>
